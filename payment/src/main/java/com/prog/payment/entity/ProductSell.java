@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.modelmapper.ModelMapper;
+
+import com.prog.payment.data.vo.ProductSellVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,7 +45,11 @@ public class ProductSell implements Serializable{
 	private Integer qty;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SELL_ID")
+	@JoinColumn(name = "id")
 	private Sell sell;
+	
+	public static ProductSell create(ProductSellVO productSellVO) {
+		return new ModelMapper().map(productSellVO, ProductSell.class);
+	}
 	
 }

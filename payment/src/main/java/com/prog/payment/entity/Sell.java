@@ -15,7 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.prog.payment.data.vo.SellVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,10 +44,14 @@ public class Sell implements Serializable{
 	@Column(name = "SELL_DATE", nullable = false)
 	private LocalDateTime date;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "SELL", cascade = CascadeType.REFRESH)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id", cascade = CascadeType.REFRESH)
 	private List<ProductSell> productsSell;
 	
 	@Column(name = "SELL_TOTAL_VALUE", nullable = false)
 	private BigDecimal totalValue;
 
+	public static Sell create(SellVO sellVO) {
+		return new ModelMapper().map(sellVO, Sell.class);
+	}
+	
 }
